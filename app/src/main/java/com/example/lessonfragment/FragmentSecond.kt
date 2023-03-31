@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.lessonfragment.databinding.FragmentSecondBinding
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -25,8 +26,21 @@ class FragmentSecond : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
-     }
+    ): View {
+        val binding = FragmentSecondBinding.inflate(inflater, container, false)
+        parentFragmentManager.beginTransaction()
+            .add(R.id.fragment_second_fragment_container, BlankFragment1())
+            .commit()
+        binding.button2.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_second_fragment_container, BlankFragment1())
+                .commit()
+        }
+        binding.button.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_second_fragment_container, BlankFragment2())
+                .commit()
+        }
+        return binding.root
+    }
 }
